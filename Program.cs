@@ -4,12 +4,13 @@ using System.Collections.Generic;
 
 namespace OnlineGroceryStory
 {
-    public partial class MainWindow 
+    public class OnlineOrder 
     {
+        private double amount = 0;
+        List<StructProductPackage> ProductPackages;
+        List<StructOrders> Orders;
 
-        public class Inventory
-        {
-            public struct StructProductPackage
+        public struct StructProductPackage
             {
                 public int ID;
                 public string code;
@@ -18,6 +19,7 @@ namespace OnlineGroceryStory
                 public string name;
             };
 
+
             public struct StructOrders
             {
                 public string PackageID;
@@ -25,8 +27,6 @@ namespace OnlineGroceryStory
                 public double amount;
             };
 
-            List<StructProductPackage> ProductPackages;
-            List<StructOrders> Orders;
 
             public void Init()
             {
@@ -42,6 +42,7 @@ namespace OnlineGroceryStory
 
                 Orders = new List<StructOrders>();
             }
+
 
             //To find the number of packs to meet the number of order
             public void PacksNumber(int orderquantity, int[] packs, string ProductCode)
@@ -73,12 +74,12 @@ namespace OnlineGroceryStory
 
                 //Output
                 if (packsValue[orderquantity] == 0)
-                    Console.WriteLine("Each order should contain the minimal number of packs");
+                    Console.WriteLine("Each order should contain the minimal number of packs or type the correct item ID");
 
                 else
                 {
                     Console.WriteLine("Order detail");
-                    double amount = 0;
+                   // double amount = 0;
                     string tempproductCode = "";
                     while (orderquantity > 0)
                     {
@@ -90,20 +91,23 @@ namespace OnlineGroceryStory
                                 amount += product.price;
                                 Console.WriteLine(packsValue[orderquantity].ToString() + " " + product.code + " " + product.price +"$");
                                 tempproductCode = product.code;
-
-
                             }
 
                         }
-                        //Console.WriteLine(coinValue[money].ToString());
-
                         orderquantity -= packsValue[orderquantity];
                     }
-
-                    Console.WriteLine(outputquantity.ToString() + " "+ tempproductCode + " " + amount + "$");
+                     Console.WriteLine(outputquantity.ToString() + " "+ tempproductCode + " " + amount + "$");
                 }
 
+
+                
             }
+
+            public double Amount
+             {
+                get { return amount; }
+             }
+
 
             public ArrayList GetPackageNumbers(string code)
             {
@@ -140,7 +144,7 @@ namespace OnlineGroceryStory
                 Console.WriteLine("input quantity:");
                 int quantity =Convert.ToInt32(Console.ReadLine()) ;
 
-                Inventory i = new Inventory();
+                OnlineOrder i = new OnlineOrder();
                 i.Init();
                 i.PlaceOrder(ItemID, quantity);
                
@@ -149,4 +153,4 @@ namespace OnlineGroceryStory
         }
     }
 
-    }
+    
